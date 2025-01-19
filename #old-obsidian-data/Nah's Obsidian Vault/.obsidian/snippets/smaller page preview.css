@@ -1,0 +1,5 @@
+.popover.hover-popover {
+transform: scale(0.8);
+max-width: 100vw;
+}
+.tooltip.mod-top { display: none; }

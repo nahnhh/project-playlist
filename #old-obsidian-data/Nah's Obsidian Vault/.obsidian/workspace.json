@@ -1,0 +1,202 @@
+{
+  "main": {
+    "id": "de2766fa50137d06",
+    "type": "split",
+    "children": [
+      {
+        "id": "5a66e0b651694076",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ecd77bfa57d14723",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Illusionary ドリーミング/Illusionary ドリーミング - あなたの魅力的な笑顔.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "f21dde7fbf6e6abb",
+    "type": "split",
+    "children": [
+      {
+        "id": "769479cfb5201daf",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0f07ed39524848a9",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "c19e8574a1436fd8",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tag:#vocal",
+                "matchingCase": false,
+                "explainSearch": true,
+                "collapseAll": true,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "e752e9d257a806b9",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 224.5
+  },
+  "right": {
+    "id": "e93aa394040d2e3c",
+    "type": "split",
+    "children": [
+      {
+        "id": "bcccc6cefdfeebd4",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ef8dcff46847d4b6",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Illusionary ドリーミング/Illusionary ドリーミング - あなたの魅力的な笑顔.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "8d3c8bbc4fdca8e1",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Illusionary ドリーミング/Illusionary ドリーミング - あなたの魅力的な笑顔.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "e0d57c2f842fa035",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "f989dfcf02735b21",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Illusionary ドリーミング/Illusionary ドリーミング - あなたの魅力的な笑顔.md"
+              }
+            }
+          }
+        ],
+        "currentTab": 2
+      }
+    ],
+    "direction": "horizontal",
+    "width": 222.5,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "obsidian42-brat:BRAT": false
+    }
+  },
+  "active": "ecd77bfa57d14723",
+  "lastOpenFiles": [
+    "Illusionary ドリーミング/Illusionary ドリーミング - ジャジーナイト.md",
+    "blackmoonブラックムーン/blackmoonブラックムーン - ブラックムーンライト.md",
+    "days of blue/days of blue - Alone Together.md",
+    "days of blue/days of blue - An Empty City Street.md",
+    "days of blue/days of blue - Arvo.md",
+    "days of blue/days of blue - A Gentle Breeze.md",
+    "Search Engine.md",
+    "Query for instru.md",
+    "desert daddy.canvas",
+    "Pure Table.md",
+    "blackmoonブラックムーン/blackmoonブラックムーン - ランナー.md",
+    "--Slushwave/🎹 KEYBOARD.md",
+    "m e m o r y メモリー/m e m o r y メモリー - もう一度元に戻す.md",
+    "m e m o r y メモリー/m e m o r y メモリー - 欲望と誘惑.md",
+    "m e m o r y メモリー/m e m o r y メモリー - あなたがいなくて寂しいです.md",
+    "m e m o r y メモリー/m e m o r y メモリー - そこに彼女が行く.md",
+    "--Slushwave/🎛 SYNTH.md",
+    "--Slushwave/🎼 ACCORDIAN.md",
+    "--Slushwave/⛩ KOTO.md",
+    "--Slushwave/🌬 WHISTLE.md",
+    "--Slushwave/🛎 DING.md",
+    "--Slushwave/🎐 CHIME.md",
+    "--Slushwave/🚀 ROCK.md",
+    "--Slushwave/👻 OOOH.md",
+    "--Slushwave/🥁 BLUE.md",
+    "--Slushwave/🎤 POP.md",
+    "--Slushwave/📼 R&B.md",
+    "Untitled.canvas",
+    "Untitled 1.canvas",
+    "table-export-006.csv",
+    "table-export-005.csv",
+    "table-export-004.csv",
+    "table-export-003.csv",
+    "table-export-002.csv",
+    "table-export-001.csv",
+    "slush-003.csv",
+    "slush-002.csv",
+    "slush-001.csv",
+    "slush-004.csv",
+    "Query.md Canvas.canvas",
+    "---NB/Synth NB.canvas",
+    "Synth NB.md Canvas.canvas",
+    "Test.md Canvas.canvas",
+    "Pasted image 20230718105359.png",
+    "Pasted image 20230715214800.png",
+    "Untitled.md Canvas.canvas",
+    "Untitled-0.canvas",
+    "🎛 SYNTH.canvas"
+  ]
+}

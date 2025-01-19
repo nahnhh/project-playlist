@@ -1,0 +1,12 @@
+/*
+    dataview-shorten-links.css snippet
+
+    Shortens long filename links in Dataview tables with an ellipsis.
+    2021-05-07 Matthias C. Hormann (Moonbase59)
+*/
+.dataview.table-view-table > tbody > tr > td a:not(.tag) {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

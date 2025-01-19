@@ -1,0 +1,9 @@
+{
+  "alwaysUpdateLinks": true,
+  "newFileLocation": "current",
+  "attachmentFolderPath": "Slushwave",
+  "promptDelete": false,
+  "showFrontmatter": true,
+  "spellcheck": false,
+  "strictLineBreaks": true
+}

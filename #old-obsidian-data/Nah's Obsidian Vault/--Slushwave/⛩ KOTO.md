@@ -1,0 +1,32 @@
+---
+Aliases: [ "#koto" ]
+---
+```expander
+tag:#instru/koto
+```
+- [[desert sand feels warm at night - Forever]]
+- [[desert sand feels warm at night - そよ風]]
+- [[desert sand feels warm at night - 大嘗会]]
+- [[desert sand feels warm at night - 爽快]]
+- [[F i b o n a c c i - Don't look back]]
+- [[F i b o n a c c i - I've dreamed about you a lot since you dissapeared]]
+- [[F i b o n a c c i - There's so much I need to say]]
+- [[F i b o n a c c i - This is the moment]]
+- [[G a t e w a y ゲートウェイ - グリッター]]
+- [[Illusionary ドリーミング - 恋人たち]]
+- [[Illusionary ドリーミング - 浅い眠り]]
+- [[Illusionary ドリーミング - 静けさが恋しい]]
+- [[m e m o r y メモリー - もう一度元に戻す]]
+- [[M y s t e r yミステリー - 遺志]]
+- [[MindSpring Memories - ⌊imsend.wav ≈ imrcv.wav⌉]]
+- [[MindSpring Memories - Life Between Lives]]
+- [[MindSpring Memories - The Backdoor]]
+- [[S O A R E R - 恐れないでください]]
+- [[t e l e p a t h テレパシー能力者 - セックスファンタジー]]
+- [[t e l e p a t h テレパシー能力者 - 思い出]]
+- [[t e l e p a t h テレパシー能力者 - 欲望 (現実を超えて)]]
+- [[トリニティー無限大 - セックス ＰＡＳＳＩＯＮ]]
+- [[トリニティー無限大 - 愛しています]]
+- [[仮想夢プラザ - 永遠の恋人]]
+- [[猫 シ Corp. - Ｍｏｒｅ　Ｔｈａｎ　Ｆｒｉｅｎｄｓ]]
+- [[絡み合った運命 - 素晴らしい景色]]

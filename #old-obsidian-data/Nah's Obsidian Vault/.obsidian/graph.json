@@ -1,0 +1,135 @@
+{
+  "collapse-filter": false,
+  "search": "path:---NB",
+  "showTags": false,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "showOrphans": true,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "tag:#violin",
+      "color": {
+        "a": 1,
+        "rgb": 14048348
+      }
+    },
+    {
+      "query": "tag:#sax",
+      "color": {
+        "a": 1,
+        "rgb": 16762880
+      }
+    },
+    {
+      "query": "tag:#piano",
+      "color": {
+        "a": 1,
+        "rgb": 61468
+      }
+    },
+    {
+      "query": "tag:#guitar",
+      "color": {
+        "a": 1,
+        "rgb": 6084290
+      }
+    },
+    {
+      "query": "tag:#rnb",
+      "color": {
+        "a": 1,
+        "rgb": 9185520
+      }
+    },
+    {
+      "query": "tag:#koto",
+      "color": {
+        "a": 1,
+        "rgb": 3974359
+      }
+    },
+    {
+      "query": "tag:#rock",
+      "color": {
+        "a": 1,
+        "rgb": 5288
+      }
+    },
+    {
+      "query": "tag:#flute",
+      "color": {
+        "a": 1,
+        "rgb": 10053888
+      }
+    },
+    {
+      "query": "tag:#pianoish",
+      "color": {
+        "a": 1,
+        "rgb": 7137961
+      }
+    },
+    {
+      "query": "tag:#chime",
+      "color": {
+        "a": 1,
+        "rgb": 5693435
+      }
+    },
+    {
+      "query": "tag:#synth",
+      "color": {
+        "a": 1,
+        "rgb": 16732872
+      }
+    },
+    {
+      "query": "tag:#pop",
+      "color": {
+        "a": 1,
+        "rgb": 4980991
+      }
+    },
+    {
+      "query": "tag:#ding",
+      "color": {
+        "a": 1,
+        "rgb": 16768522
+      }
+    },
+    {
+      "query": "tag:#blue",
+      "color": {
+        "a": 1,
+        "rgb": 1361151
+      }
+    },
+    {
+      "query": "tag:#oooh",
+      "color": {
+        "a": 1,
+        "rgb": 13863109
+      }
+    },
+    {
+      "query": "tag:#whistle",
+      "color": {
+        "a": 1,
+        "rgb": 12537588
+      }
+    }
+  ],
+  "collapse-display": true,
+  "showArrow": false,
+  "textFadeMultiplier": -0.4,
+  "nodeSizeMultiplier": 0.99844025730062,
+  "lineSizeMultiplier": 0.65953776968179,
+  "collapse-forces": false,
+  "centerStrength": 0.197984857972334,
+  "repelStrength": 5.99988615016793,
+  "linkStrength": 0.489440428075369,
+  "linkDistance": 500,
+  "scale": 0.5735656744216677,
+  "close": true
+}

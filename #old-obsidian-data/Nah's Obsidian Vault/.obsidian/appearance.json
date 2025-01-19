@@ -1,0 +1,20 @@
+{
+  "accentColor": "#3db36e",
+  "theme": "system",
+  "translucency": false,
+  "interfaceFontFamily": "Noto Sans JP,Segoe UI",
+  "textFontFamily": "Segoe UI,Noto Sans JP",
+  "showViewHeader": true,
+  "enabledCssSnippets": [
+    "clean-embeds-all",
+    "smaller page preview",
+    "transparent and small yaml",
+    "Bullet Point Relationship Lines",
+    "Auto fade note controls and status bar",
+    "Shorten links",
+    "colored tags",
+    "Better Tables"
+  ],
+  "baseFontSize": 17,
+  "nativeMenus": false
+}

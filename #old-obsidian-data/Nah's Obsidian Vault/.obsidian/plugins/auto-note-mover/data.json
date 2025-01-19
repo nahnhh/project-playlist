@@ -1,0 +1,148 @@
+{
+  "trigger_auto_manual": "Automatic",
+  "use_regex_to_check_for_tags": false,
+  "statusBar_trigger_indicator": true,
+  "folder_tag_pattern": [
+    {
+      "folder": "t e l e p a t h テレパシー能力者",
+      "tag": "",
+      "pattern": "t e l e p a t h テレパシー能力者.*"
+    },
+    {
+      "folder": "t e l e p a t h テレパシー能力者",
+      "tag": "",
+      "pattern": "仮想夢プラザ.*"
+    },
+    {
+      "folder": "t e l e p a t h テレパシー能力者",
+      "tag": "",
+      "pattern": "虛擬夢想廣場.*"
+    },
+    {
+      "folder": "t e l e p a t h テレパシー能力者",
+      "tag": "",
+      "pattern": "泰合志恒.*"
+    },
+    {
+      "folder": "desert sand feels warm at night",
+      "tag": "",
+      "pattern": "desert sand feels warm at night.*"
+    },
+    {
+      "folder": "desert sand feels warm at night",
+      "tag": "",
+      "pattern": "ծիածանի հիբիսկուս"
+    },
+    {
+      "folder": "MindSpring Memories",
+      "tag": "",
+      "pattern": "MindSpring Memories.*"
+    },
+    {
+      "folder": "S O A R E R",
+      "tag": "",
+      "pattern": "S O A R E R.*"
+    },
+    {
+      "folder": "Illusionary ドリーミング",
+      "tag": "",
+      "pattern": "Illusionary ドリーミング.*"
+    },
+    {
+      "folder": "Illusionary ドリーミング",
+      "tag": "",
+      "pattern": "夢研究センター.*"
+    },
+    {
+      "folder": "days of blue",
+      "tag": "",
+      "pattern": "days of blue.*"
+    },
+    {
+      "folder": "絡み合った運命 - 交织的命运",
+      "tag": "",
+      "pattern": "絡み合った運命.*"
+    },
+    {
+      "folder": "絡み合った運命 - 交织的命运",
+      "tag": "",
+      "pattern": "交织的命运.*"
+    },
+    {
+      "folder": "猫 シ Corp",
+      "tag": "",
+      "pattern": "猫 シ Corp.*"
+    },
+    {
+      "folder": "M y s t e r yミステリー",
+      "tag": "",
+      "pattern": "M y s t e r yミステリー.*"
+    },
+    {
+      "folder": "G a t e w a y ゲートウェイ",
+      "tag": "",
+      "pattern": "G a t e w a y.*"
+    },
+    {
+      "folder": "blackmoonブラックムーン",
+      "tag": "",
+      "pattern": "blackmoon.*"
+    },
+    {
+      "folder": "F i b o n a c c i",
+      "tag": "",
+      "pattern": "F i b o n a c c i.*"
+    },
+    {
+      "folder": "from tokyo to honolulu",
+      "tag": "",
+      "pattern": "from tokyo to honolulu.*"
+    },
+    {
+      "folder": "Glaciology",
+      "tag": "",
+      "pattern": "Glaciology.*"
+    },
+    {
+      "folder": "Phoenix 2772",
+      "tag": "",
+      "pattern": "Phoenix.*"
+    },
+    {
+      "folder": "THIRDWORLD DREAMPLACE",
+      "tag": "",
+      "pattern": "THIRDWORLD DREAMPLACE.*"
+    },
+    {
+      "folder": "m e m o r y メモリー",
+      "tag": "",
+      "pattern": "m e m o r y メモリー.*"
+    },
+    {
+      "folder": "VAV-31",
+      "tag": "",
+      "pattern": "VAV-31.*"
+    },
+    {
+      "folder": "ℍUM♥ℕIGHTM♥RE",
+      "tag": "",
+      "pattern": "ℍUM♥ℕIGHTM♥RE.*"
+    },
+    {
+      "folder": "送信機",
+      "tag": "",
+      "pattern": "送信機.*"
+    },
+    {
+      "folder": "nah",
+      "tag": "",
+      "pattern": "nah.*"
+    }
+  ],
+  "use_regex_to_check_for_excluded_folder": false,
+  "excluded_folder": [
+    {
+      "folder": ""
+    }
+  ]
+}

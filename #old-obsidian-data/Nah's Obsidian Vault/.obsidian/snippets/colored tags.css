@@ -1,0 +1,72 @@
+.tag:not(.token) {
+	background-color: var(--text-accent);
+	border: none;
+	color: black;
+	font-size: 100%;
+	padding: 1px 10px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	margin: 0px 0px;
+	cursor: pointer;
+	border-radius: 14px;
+}
+.tag:not(.token):hover {
+	color: white;
+	background-color: var(--text-accent-hover);
+}
+.tag[href^="#instru/violin"] {
+  background-color: #d65c5c;
+}
+.tag[href^="#instru/sax"] {
+  background-color: #ffc800;
+}
+.tag[href^="#instru/piano"] {
+  background-color: #00f01c;
+}
+.tag[href^="#instru/guitar"] {
+  background-color: #5cd6c2;
+}
+.tag[href^="#instru/koto"] {
+  background-color: #3ca4d7;
+}
+.tag[href^="#instru/rock"] {
+  background-color: #1B2FC6;
+}
+.tag[href^="#instru/flute"] {
+  background-color: #d08358;
+}
+.tag[href^="#instru/pianoish"] {
+  background-color: #6ceaa9;
+}
+.tag[href^="#instru/chime"] {
+  background-color: #56dffb;
+}
+.tag[href^="#instru/synth"] {
+  background-color: #9510ac;
+}
+.tag[href^="#instru/ding"] {
+  background-color: #ffde0a;
+}
+.tag[href^="#instru/oooh"] {
+  background-color: #d388c5;
+}
+.tag[href^="#instru/whistle"] {
+  background-color: #bf4ef4;
+}
+.tag[href^="#instru/harp"] {
+  background-color: #8446ff;
+}
+.tag[href^="#instru/accordian"] {
+  background-color: #fb7f4c;
+}
+.tag[href^="#instru/trumpet"] {
+  background-color: #fef445;
+}
+
+.tag[href^="#beat"] {
+  display: none;
+}
+.tag[href^="#lang"] {
+  display: none;
+}
