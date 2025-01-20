@@ -29,21 +29,24 @@ class FeatureExtractor:
             try:
                 # Compute features
                 features_part = FeatureExtractor.extract_features_single(uid, file_path)
-                fs_mid_list = features_part[0]
+                fs_mid_list.append(features_part[0])
                 if features_part[1] is not None:
-                    fs_start_list = features_part[1]
-                    #fs_end_list = features_part[2]
+                    fs_start_list.append(features_part[1])
+                    fs_end_list.append(features_part[2])
             except Exception as e:
                 print(f"Can't process features for {file_path} ({repr(e)})")
                 bad_files.append(file_path)
         # Check if we have any features before creating dataframe
-        if not fs_mid_list or fs_mid_list.empty:
-            print("No features were extracted???")
+        try:
+          if not fs_mid_list:
+              print("No features were extracted???")
+              return None
+        except ValueError as e:
+            print(f"No features were extracted??? ({repr(e)})")
             return None
-            
         # Process each feature dataframe (mid, start, end)
         for i, fs_df in enumerate([fs_mid_list, fs_start_list, fs_end_list]):
-            if fs_df.empty:
+            if fs_df is None:
                 continue
                 
             # Create and save dataframe

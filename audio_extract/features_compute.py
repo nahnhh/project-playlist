@@ -37,7 +37,7 @@ class FeaturesCompute:
 
     return columns.sort_values()  # Sort the index and return sorted version
   
-  def compute_features(self, audio_path, uid=None, mid_split: float = 0.6, in_out_sec: int = 22):
+  def compute_features(self, audio_path, uid=None, mid_split: float = 0.6, in_out_split: float = 0.2):
     """Compute the features."""
     
     features = pd.Series(index=self.columns(), dtype=np.float32)
@@ -52,7 +52,6 @@ class FeaturesCompute:
       try:
           values = np.asarray(values, dtype=np.float32)
           values = values.T
-          print(values.shape)
           # For single-value features (zcr, rmse)
           if values.shape[1] == 1:
               features[name, 'mean'] = np.around(np.mean(values, axis=0), decimals=4)
@@ -70,15 +69,15 @@ class FeaturesCompute:
     # Load audio file
     try:
       # Get duration first
-      duration = np.around(librosa.get_duration(path=file), decimals=2)
+      duration = librosa.get_duration(path=file)
       
       # Calculate middle %
-      start_percent = np.around((1 - mid_split) / 2, decimals=2)  # = 0.2 for middle 60%
-      offset = np.around(duration * start_percent, decimals=2)
-      mid_duration = np.around(duration * mid_split, decimals=2)
-      in_out = in_out_sec
+      start_percent = (1 - mid_split) / 2 # = 0.2 for middle 60%
+      offset = duration * start_percent
+      mid_duration = duration * mid_split
+      in_out = duration * in_out_split
       
-      # Load middle part
+      #Load middle part
       y, sr = librosa.load(file, 
                           offset=offset, 
                           duration=mid_duration,
@@ -88,13 +87,12 @@ class FeaturesCompute:
       if mid_split < 1:
         # Load beginning part
         y_start, sr_start = librosa.load(file, 
-                            offset=0, 
                             duration=in_out,
                             sr=None)
         y_sr.append((y_start, sr_start))
         # Load end part
         y_end, sr_end = librosa.load(file, 
-                            offset=duration-in_out-0.01, 
+                            offset=duration-in_out, 
                             duration=in_out,
                             sr=None)
         y_sr.append((y_end, sr_end))
@@ -107,6 +105,13 @@ class FeaturesCompute:
     # Compute features for each part
     features_part = []
     for i, (y, sr) in enumerate(y_sr):
+      if i == 0:
+        print("[[[PROCESSING MIDDLE PART: {:.2f}s]]]".format(mid_duration))
+      elif i == 1:
+        print("[[[PROCESSING START PART: {:.2f}s]]]".format(in_out))
+      else:
+        print("[[[PROCESSING END PART: {:.2f}s]]]".format(in_out))
+
       # Create new features Series for each part
       features = pd.Series(index=self.columns(), dtype=np.float32)
       features.sort_index()
@@ -114,16 +119,13 @@ class FeaturesCompute:
       if uid:
         features[('uid', '', '')] = uid
 
-      if i == 0:
-        print("[[[PROCESSING MIDDLE PART: {:.2f}s]]]".format(mid_duration))
-      elif i == 1:
-        print("[[[PROCESSING START PART: {:.2f}s]]]".format(in_out))
-      else:
-        print("[[[PROCESSING END PART: {:.2f}s]]]".format(in_out))
-      
       # Compute tempo
-      tempo, _ = librosa.beat.beat_track(y=y, sr=sr, start_bpm=50)
-      features[('tempo', 'mean', '01')] = np.around(tempo[0], decimals=3)
+      try:
+        tempo, _ = librosa.beat.beat_track(y=y, sr=sr, start_bpm=50)
+        features[('tempo', 'mean', '01')] = np.around(tempo[0], decimals=3)
+      except Exception as e:
+        print("Failed to compute tempo, set to NaN")
+        features[('tempo', 'mean', '01')] = np.nan
 
       # Compute CQT for Chroma features
       cqt = np.abs(librosa.cqt(y, sr=sr, 
@@ -176,4 +178,5 @@ class FeaturesCompute:
       del D
 
       features_part.append(features)
+      print(features_part)
     return features_part
