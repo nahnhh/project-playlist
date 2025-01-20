@@ -6,7 +6,7 @@ sys.path.append(str(Path(__file__).parent.parent))
 from audio_extract.build_db import MusicDatabase
 from audio_extract.uid_gen import TrackIDGenerator
 
-base_path = r'D:/#ALLMYMUSIC - Copy/00. Future Funk'
+base_path = r'D:\#ALLMYMUSIC - Copy\00. Vaporwave Albums\Aexion & 夢のＳＴＡＲＤＩＡ - Nights of Azure - Copy'
 folder_list = []
 
 # Get all subfolders

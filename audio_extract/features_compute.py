@@ -19,11 +19,13 @@ class FeaturesCompute:
         spectral_centroid=1, # for brightness, skewness & kurtosis
         spectral_bandwidth=1, # for frequency spread
     )
-    # Descriptive stats
-    stats = ('mean', 'std', 'skewness', 'kurtosis')
-    # Column names
+    # Different stats for different features
+    single_value_stats = ('mean', 'std')
+    multi_value_stats = ('mean', 'std', 'skewness', 'kurtosis')
+    
     tuples = []
     for feat, size in feature_sizes.items():
+      stats = single_value_stats if size == 1 else multi_value_stats
       for stat in stats:
         # (chroma_cens, kurtosis, 01..12)
         it = ((feat, stat, '{:02d}'.format(i+1)) for i in range(size))
@@ -47,23 +49,33 @@ class FeaturesCompute:
 
     def feature_stats(name, values):
       """Calculates descriptive statistics for each feature."""
-      values = np.asarray(values, dtype=np.float32)
-      values = values.T
-      features[name, 'mean'] = np.around(np.mean(values, axis=0), decimals=4)
-      features[name, 'std'] = np.around(np.std(values, axis=0), decimals=4)
-      features[name, 'skewness'] = np.around(stats.skew(values, axis=0), decimals=4)
-      features[name, 'kurtosis'] = np.around(stats.kurtosis(values, axis=0), decimals=4)
+      try:
+          values = np.asarray(values, dtype=np.float32)
+          values = values.T
+          print(values.shape)
+          # For single-value features (zcr, rmse)
+          if values.shape[1] == 1:
+              features[name, 'mean'] = np.around(np.mean(values, axis=0), decimals=4)
+              features[name, 'std'] = np.around(np.std(values, axis=0), decimals=4)
+          # For multi-value features (chroma_cens, mfcc, spectral features)
+          else:
+              features[name, 'mean'] = np.around(np.mean(values, axis=0), decimals=4)
+              features[name, 'std'] = np.around(np.std(values, axis=0), decimals=4)
+              features[name, 'skewness'] = np.around(stats.skew(values, axis=0), decimals=4)
+              features[name, 'kurtosis'] = np.around(stats.kurtosis(values, axis=0), decimals=4)
+      except Exception as e:
+          print(f"Warning: Could not compute stats for {name}: {e}")
 
     file = audio_path
     # Load audio file
     try:
       # Get duration first
-      duration = librosa.get_duration(path=file)
+      duration = np.around(librosa.get_duration(path=file), decimals=2)
       
       # Calculate middle %
-      start_percent = (1 - mid_split) / 2  # = 0.2 for middle 60%
-      offset = duration * start_percent
-      mid_duration = duration * mid_split
+      start_percent = np.around((1 - mid_split) / 2, decimals=2)  # = 0.2 for middle 60%
+      offset = np.around(duration * start_percent, decimals=2)
+      mid_duration = np.around(duration * mid_split, decimals=2)
       in_out = in_out_sec
       
       # Load middle part
@@ -82,7 +94,7 @@ class FeaturesCompute:
         y_sr.append((y_start, sr_start))
         # Load end part
         y_end, sr_end = librosa.load(file, 
-                            offset=duration-in_out, 
+                            offset=duration-in_out-0.01, 
                             duration=in_out,
                             sr=None)
         y_sr.append((y_end, sr_end))
@@ -164,5 +176,4 @@ class FeaturesCompute:
       del D
 
       features_part.append(features)
-
     return features_part
