@@ -37,7 +37,7 @@ class FeaturesCompute:
 
     return columns.sort_values()  # Sort the index and return sorted version
   
-  def compute_features(self, audio_path, uid=None, mid_split: float = 0.6, in_out_split: float = 0.2):
+  def compute_features(self, audio_path, uid=None, mid_split: float = 0.6, in_out_sec: int = 30):
     """Compute the features."""
     
     features = pd.Series(index=self.columns(), dtype=np.float32)
@@ -75,7 +75,7 @@ class FeaturesCompute:
       start_percent = (1 - mid_split) / 2 # = 0.2 for middle 60%
       offset = duration * start_percent
       mid_duration = duration * mid_split
-      in_out = duration * in_out_split
+      in_out = np.min([duration * start_percent, in_out_sec])
       
       #Load middle part
       y, sr = librosa.load(file, 
