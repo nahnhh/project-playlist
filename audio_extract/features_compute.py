@@ -37,7 +37,7 @@ class FeaturesCompute:
 
     return columns.sort_values()  # Sort the index and return sorted version
   
-  def compute_features(self, audio_path, uid=None, mid_split: float = 0.6, in_out_sec: int = 30):
+  def compute_features(self, audio_path, uid=None, mid_split: float = 0.7, in_out_sec: int = 30):
     """Compute the features."""
     
     features = pd.Series(index=self.columns(), dtype=np.float32)
