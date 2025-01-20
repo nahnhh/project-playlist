@@ -178,5 +178,4 @@ class FeaturesCompute:
       del D
 
       features_part.append(features)
-      print(features_part)
     return features_part
