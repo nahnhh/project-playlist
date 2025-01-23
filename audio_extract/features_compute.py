@@ -7,6 +7,10 @@ class FeaturesCompute:
   """
   Compute features for a given audio file. Saves to CSV format.
   """
+  def __init__(self, split: list = [15, 70, 15], in_out_sec: int = 30):
+    self.split = split  # Store split as instance variable
+    self.in_out_sec = in_out_sec
+    
   def columns(self):
     """Defines the structure of features and their column names"""
     feature_sizes = dict(
@@ -37,9 +41,76 @@ class FeaturesCompute:
 
     return columns.sort_values()  # Sort the index and return sorted version
   
-  def compute_features(self, audio_path, uid=None, mid_split: float = 0.7, in_out_sec: int = 30):
-    """Compute the features."""
+  def split_audio(self, audio_path):
+    """Split audio into parts using self.split configuration"""
+    file = audio_path
+    # Load audio file
+    try:
+      duration = librosa.get_duration(path=file)
+      y_sr = []
+      
+      if len(self.split) % 2 == 1:  # ODD SPLITS
+        mid_idx = len(self.split) // 2
+        mid_split = self.split[mid_idx] / 100
+        
+        # Load middle part first
+        offset = duration * sum(self.split[:mid_idx]) / 100
+        mid_duration = duration * mid_split
+        y, sr = librosa.load(file, offset=offset, duration=mid_duration, sr=None)
+        y_sr.append((y, sr, f'middle ({mid_split}%)', mid_duration))
+        
+        # Load remaining parts
+        current_offset = offset
+        for i, p in enumerate(self.split[:mid_idx]):  # Before middle
+          # Compare first part with in_out_sec
+          part_dur = min(duration * p/100, self.in_out_sec) if i == 0 else duration * p/100
+          y, sr = librosa.load(file, offset=current_offset-part_dur, duration=part_dur, sr=None)
+          y_sr.insert(i, (y, sr, f'part {i+1} ({p}%)', part_dur))
+          current_offset -= part_dur
+        
+        current_offset = offset + mid_duration
+        for i, p in enumerate(self.split[mid_idx+1:]):  # After middle
+          # Compare last part with in_out_sec
+          part_dur = min(duration * p/100, self.in_out_sec) if i == len(self.split[mid_idx+1:])-1 else duration * p/100
+          y, sr = librosa.load(file, offset=current_offset, duration=part_dur, sr=None)
+          y_sr.append((y, sr, f'part {len(self.split)-i} ({p}%)', part_dur))
+          current_offset += part_dur
+              
+      else:  # EVEN SPLITS
+        mid_point = duration / 2
+        left_splits = self.split[:len(self.split)//2]
+        right_splits = self.split[len(self.split)//2:]
+        
+        # Load parts before middle
+        current_offset = mid_point
+        for i, p in enumerate(reversed(left_splits)):
+          # Compare first part with in_out_sec
+          part_dur = min(duration * p/100, self.in_out_sec) if i == len(left_splits)-1 else duration * p/100
+          y, sr = librosa.load(file, offset=current_offset-part_dur, duration=part_dur, sr=None)
+          # Fix: use i directly for part numbering
+          part_num = len(left_splits) - i
+          y_sr.insert(0, (y, sr, f'part {part_num} ({p}%)', part_dur))
+          current_offset -= part_dur
+            
+        # Load parts after middle
+        current_offset = mid_point
+        for i, p in enumerate(right_splits):
+          # Compare last part with in_out_sec
+          part_dur = min(duration * p/100, self.in_out_sec) if i == len(right_splits)-1 else duration * p/100
+          y, sr = librosa.load(file, offset=current_offset, duration=part_dur, sr=None)
+          # Fix: continue numbering from where left splits ended
+          part_num = len(left_splits) + i + 1
+          y_sr.append((y, sr, f'part {part_num} ({p}%)', part_dur))
+          current_offset += part_dur
+
+    except Exception as e:
+      print(f"Failed to load audio: {e}")
+      return None
     
+    return y_sr
+
+  def compute_features(self, audio_path, uid=None):
+    """Compute features from audio parts."""
     features = pd.Series(index=self.columns(), dtype=np.float32)
     features.sort_index()
     
@@ -65,53 +136,11 @@ class FeaturesCompute:
       except Exception as e:
           print(f"Warning: Could not compute stats for {name}: {e}")
 
-    file = audio_path
-    # Load audio file
-    try:
-      # Get duration first
-      duration = librosa.get_duration(path=file)
-      
-      # Calculate middle %
-      start_percent = (1 - mid_split) / 2 # = 0.2 for middle 60%
-      offset = duration * start_percent
-      mid_duration = duration * mid_split
-      in_out = np.min([duration * start_percent, in_out_sec])
-      
-      #Load middle part
-      y, sr = librosa.load(file, 
-                          offset=offset, 
-                          duration=mid_duration,
-                          sr=None)
-      y_sr = [(y, sr)]
-
-      if mid_split < 1:
-        # Load beginning part
-        y_start, sr_start = librosa.load(file, 
-                            duration=in_out,
-                            sr=None)
-        y_sr.append((y_start, sr_start))
-        # Load end part
-        y_end, sr_end = librosa.load(file, 
-                            offset=duration-in_out, 
-                            duration=in_out,
-                            sr=None)
-        y_sr.append((y_end, sr_end))
-
-    except Exception as e:
-      print(f"Failed to load audio: {e}")
-      return None
-
-
-    # Compute features for each part
+    y_sr = self.split_audio(audio_path)
     features_part = []
-    for i, (y, sr) in enumerate(y_sr):
-      if i == 0:
-        print("[[[PROCESSING MIDDLE PART: {:.2f}s]]]".format(mid_duration))
-      elif i == 1:
-        print("[[[PROCESSING START PART: {:.2f}s]]]".format(in_out))
-      else:
-        print("[[[PROCESSING END PART: {:.2f}s]]]".format(in_out))
-
+    for y, sr, label, part_dur in y_sr:
+      print(f"[[[PROCESSING {label.upper()}: {part_dur:.2f}s]]]")
+      
       # Create new features Series for each part
       features = pd.Series(index=self.columns(), dtype=np.float32)
       features.sort_index()

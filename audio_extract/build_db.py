@@ -43,7 +43,7 @@ class MusicDatabase:
       return fpath
 
   def _scan_library(self, depth: bool = True, extract_features: bool = False, 
-               output_file: str = 'music_features.csv'):
+               output_file: str = 'music_features.csv', split=[15, 70, 15], in_out_sec=30):
     """Scan directory and build music database with features."""
     self.extract_features = extract_features
     self.output_file = output_file
@@ -75,4 +75,5 @@ class MusicDatabase:
         output_dir = Path(self.copy_folder)
         output_dir.mkdir(parents=True, exist_ok=True)
         output_file = output_dir / self.output_file
-        FeatureExtractor.extract_features(path_list=path_list, uids=self.df.index, output_file=output_file)
+        extractor = FeatureExtractor(split=split, in_out_sec=in_out_sec)
+        extractor.extract_features(uids=self.df.index, path_list=path_list, output_file=output_file)

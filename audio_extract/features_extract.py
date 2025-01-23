@@ -4,56 +4,61 @@ from tqdm import tqdm
 from .features_compute import FeaturesCompute
 
 class FeatureExtractor:
-    features = FeaturesCompute()
+    def __init__(self, split=[15, 70, 15], in_out_sec=30):
+        self.features = FeaturesCompute(split, in_out_sec)
     
-    @staticmethod
-    def extract_features_single(uid, audio_path):
+    def extract_features_single(self, uid, audio_path):
         """Extract features from a single audio file."""
         print(f"\n========================================\nComputing features for {uid} ({audio_path})")
         t1 = time.time()
-        features_part = FeatureExtractor.features.compute_features(uid=uid, audio_path=audio_path)
+        features_part = self.features.compute_features(uid=uid, audio_path=audio_path)
         t2 = time.time()
         print(f"Computed features for {uid} in {t2-t1:.2f}s\n========================================")
         return features_part
 
-    @staticmethod
-    def extract_features(uids, path_list, output_file):
+    def extract_features(self, uids, path_list, output_file):
         """Extract features from audio files and save to CSV"""
         t0 = time.time()
-        fs_mid_list = []
-        fs_start_list = []
-        fs_end_list = []
+        features_by_part = {}  # Dictionary to store features for each part
         bad_files = []
+
         # Extract features for each file
-        for uid, file_path in tqdm(list(zip(uids, path_list)), desc="Extracting features"):
+        uids_paths_zip = list(zip(uids, path_list))
+        for uid, file_path in tqdm(uids_paths_zip, desc="Extracting features"):
             try:
                 # Compute features
-                features_part = FeatureExtractor.extract_features_single(uid, file_path)
-                fs_mid_list.append(features_part[0])
-                if features_part[1] is not None:
-                    fs_start_list.append(features_part[1])
-                    fs_end_list.append(features_part[2])
+                features_parts = self.extract_features_single(uid, file_path)
+                
+                # Initialize lists in dictionary for each part if not exists
+                for i in range(len(features_parts)):
+                    if i not in features_by_part:
+                        features_by_part[i] = []
+                
+                # Add features to respective parts
+                for i, part_features in enumerate(features_parts):
+                    features_by_part[i].append(part_features)
+                    
             except Exception as e:
                 print(f"Can't process features for {file_path} ({repr(e)})")
                 bad_files.append(file_path)
-        # Check if we have any features before creating dataframe
-        try:
-          if not fs_mid_list:
-              print("No features were extracted???")
-              return None
-        except ValueError as e:
-            print(f"No features were extracted??? ({repr(e)})")
+
+        # Check if we have any features
+        if not features_by_part:
+            print("No features were extracted")
             return None
-        # Process each feature dataframe (mid, start, end)
-        for i, fs_df in enumerate([fs_mid_list, fs_start_list, fs_end_list]):
-            if fs_df is None:
+
+        # Process each part's features and save to separate CSV files
+        for part_num, features_list in features_by_part.items():
+            if not features_list:
                 continue
                 
-            # Create and save dataframe
-            df = pd.concat(fs_df, axis=1).T.set_index('uid')
-            save_path = str(output_file).replace('.csv', f'_{i+1}.csv') if fs_start_list else output_file
+            # Create and save dataframe for this part
+            df = pd.concat(features_list, axis=1).T.set_index('uid')
+            save_path = str(output_file).replace('.csv', f'_{part_num+1}_{self.features.split[part_num]}.csv')
             df.to_csv(save_path, float_format='%.4f')
-            print(f"Saved features of {len(df)} files in {time.time()-t0:.2f}s")
+            print(f"Saved part {part_num+1} ({self.features.split[part_num]}%) features of {len(df)} files")
+
+        print(f"Total processing time: {time.time()-t0:.2f}s")
 
         # Print bad files once at the end
         if bad_files:

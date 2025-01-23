@@ -6,7 +6,7 @@ sys.path.append(str(Path(__file__).parent.parent))
 from audio_extract.build_db import MusicDatabase
 from audio_extract.uid_gen import TrackIDGenerator
 
-def get_features(base_path, split=[15, 70, 15]):
+def get_features_from_folder(base_path, split=[15, 70, 15], in_out_sec=30):
   folder_list = []
 
   # Get all subfolders
@@ -25,7 +25,6 @@ def get_features(base_path, split=[15, 70, 15]):
           folder_list.append(str(folder_path))
 
   # Process each folder
-  id_gen = TrackIDGenerator()
   for folder in folder_list:
       first_track = next(Path(folder).glob('*.mp3'), None)
       if first_track:
@@ -34,9 +33,5 @@ def get_features(base_path, split=[15, 70, 15]):
           database = MusicDatabase(copy_folder=folder, depth=False)
           base_uid = '#' + database.df.iloc[0].name[:-3]
           print(f"Processing {folder} --> {base_uid}_[1,2,..].csv")
-          database._scan_library(depth=False, extract_features=True, output_file=f'{base_uid}.csv', split=split)
+          database._scan_library(depth=False, extract_features=True, output_file=f'{base_uid}.csv', split=split, in_out_sec=in_out_sec)
           print(f"Processed {folder} --> {base_uid}_[1,2,..].csv")
-
-if __name__ == "__main__":
-  base_path = r'D:\#ALLMYMUSIC - Copy\05. Illusionary ドリーミング\Illusionary ドリーミング - ちょうどその時'
-  get_features(base_path, split=[20, 20, 20, 20, 20])
