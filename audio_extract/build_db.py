@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 from .md_extract import MetadataExtractor
 from .uid_gen import TrackIDGenerator
-from .features_compute import FeaturesCompute
 from .artist_prefixes import ArtistPrefixes
 from .features_extract import FeatureExtractor
 
@@ -47,9 +46,6 @@ class MusicDatabase:
     """Scan directory and build music database with features."""
     self.extract_features = extract_features
     self.output_file = output_file
-    if extract_features is True:
-      self.features = FeaturesCompute()
-    #print(f"Retrieving files from {self.copy_folder}...")
     
     self.depth = 1 if self.depth is False else 1 if depth is False else 100
     copy_folder = os.path.abspath(self.copy_folder)
