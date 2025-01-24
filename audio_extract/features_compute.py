@@ -7,7 +7,7 @@ class FeaturesCompute:
   """
   Compute features for a given audio file. Saves to CSV format.
   """
-  def __init__(self, split: list = [15, 70, 15], in_out_sec: int = 30):
+  def __init__(self, split=[15, 70, 15], in_out_sec: int = 30):
     self.split = split  # Store split as instance variable
     self.in_out_sec = in_out_sec
     
@@ -42,13 +42,15 @@ class FeaturesCompute:
     return columns.sort_values()  # Sort the index and return sorted version
   
   def split_audio(self, audio_path):
-    """Split audio into parts using self.split configuration"""
+    """Split audio into parts e.g. [15, 70, 15]. If split is an integer, it is converted to a list of equal percentages."""
     file = audio_path
     # Load audio file
     try:
       duration = librosa.get_duration(path=file)
       y_sr = []
-      
+      # Convert int split to list of equal percentages
+      if isinstance(self.split, int):
+          self.split = [100 / self.split for _ in range(self.split)]
       if len(self.split) % 2 == 1:  # ODD SPLITS
         mid_idx = len(self.split) // 2
         mid_split = self.split[mid_idx] / 100
@@ -69,7 +71,7 @@ class FeaturesCompute:
           else:
               part_dur = duration * p/100
               y, sr = librosa.load(file, offset=current_offset-part_dur, duration=part_dur, sr=None)
-          y_sr.insert(i, (y, sr, f'part {i+1} ({p}%)', part_dur))
+          y_sr.insert(i, (y, sr, f'part {i+1} ({p:.0f}%)', part_dur))
           current_offset -= part_dur
         
         current_offset = offset + mid_duration
@@ -82,7 +84,7 @@ class FeaturesCompute:
               part_dur = duration * p/100
               y, sr = librosa.load(file, offset=current_offset, duration=part_dur, sr=None)
           part_num = mid_idx + i + 2
-          y_sr.append((y, sr, f'part {part_num} ({p}%)', part_dur))
+          y_sr.append((y, sr, f'part {part_num} ({p:.0f}%)', part_dur))
           current_offset += part_dur
               
       else:  # EVEN SPLITS
@@ -101,7 +103,7 @@ class FeaturesCompute:
               part_dur = duration * p/100
               y, sr = librosa.load(file, offset=current_offset-part_dur, duration=part_dur, sr=None)
           part_num = len(left_splits) - i
-          y_sr.insert(0, (y, sr, f'part {part_num} ({p}%)', part_dur))
+          y_sr.insert(0, (y, sr, f'part {part_num} ({p:.0f}%)', part_dur))
           current_offset -= part_dur
             
         # Load parts after middle
@@ -115,7 +117,7 @@ class FeaturesCompute:
               part_dur = duration * p/100
               y, sr = librosa.load(file, offset=current_offset, duration=part_dur, sr=None)
           part_num = len(left_splits) + i + 1
-          y_sr.append((y, sr, f'part {part_num} ({p}%)', part_dur))
+          y_sr.append((y, sr, f'part {part_num} ({p:.0f}%)', part_dur))
           current_offset += part_dur
 
     except Exception as e:
