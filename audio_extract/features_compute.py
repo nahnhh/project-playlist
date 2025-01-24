@@ -57,23 +57,32 @@ class FeaturesCompute:
         offset = duration * sum(self.split[:mid_idx]) / 100
         mid_duration = duration * mid_split
         y, sr = librosa.load(file, offset=offset, duration=mid_duration, sr=None)
-        y_sr.append((y, sr, f'middle ({mid_split}%)', mid_duration))
+        y_sr.append((y, sr, f'middle ({mid_split*100:.0f}%)', mid_duration))
         
         # Load remaining parts
         current_offset = offset
         for i, p in enumerate(self.split[:mid_idx]):  # Before middle
-          # Compare first part with in_out_sec
-          part_dur = min(duration * p/100, self.in_out_sec) if i == 0 else duration * p/100
-          y, sr = librosa.load(file, offset=current_offset-part_dur, duration=part_dur, sr=None)
+          # First part: use either percentage or in_out_sec
+          if i == 0:
+              part_dur = min(duration * p/100, self.in_out_sec)
+              y, sr = librosa.load(file, duration=part_dur, sr=None)  # Start from beginning
+          else:
+              part_dur = duration * p/100
+              y, sr = librosa.load(file, offset=current_offset-part_dur, duration=part_dur, sr=None)
           y_sr.insert(i, (y, sr, f'part {i+1} ({p}%)', part_dur))
           current_offset -= part_dur
         
         current_offset = offset + mid_duration
         for i, p in enumerate(self.split[mid_idx+1:]):  # After middle
-          # Compare last part with in_out_sec
-          part_dur = min(duration * p/100, self.in_out_sec) if i == len(self.split[mid_idx+1:])-1 else duration * p/100
-          y, sr = librosa.load(file, offset=current_offset, duration=part_dur, sr=None)
-          y_sr.append((y, sr, f'part {len(self.split)-i} ({p}%)', part_dur))
+          # Last part: use either percentage or in_out_sec
+          if i == len(self.split[mid_idx+1:])-1:
+              part_dur = min(duration * p/100, self.in_out_sec)
+              y, sr = librosa.load(file, offset=duration-part_dur, duration=part_dur, sr=None)  # From end
+          else:
+              part_dur = duration * p/100
+              y, sr = librosa.load(file, offset=current_offset, duration=part_dur, sr=None)
+          part_num = mid_idx + i + 2
+          y_sr.append((y, sr, f'part {part_num} ({p}%)', part_dur))
           current_offset += part_dur
               
       else:  # EVEN SPLITS
@@ -84,10 +93,13 @@ class FeaturesCompute:
         # Load parts before middle
         current_offset = mid_point
         for i, p in enumerate(reversed(left_splits)):
-          # Compare first part with in_out_sec
-          part_dur = min(duration * p/100, self.in_out_sec) if i == len(left_splits)-1 else duration * p/100
-          y, sr = librosa.load(file, offset=current_offset-part_dur, duration=part_dur, sr=None)
-          # Fix: use i directly for part numbering
+          # First part: use either percentage or in_out_sec
+          if i == len(left_splits)-1:
+              part_dur = min(duration * p/100, self.in_out_sec)
+              y, sr = librosa.load(file, duration=part_dur, sr=None)  # Start from beginning
+          else:
+              part_dur = duration * p/100
+              y, sr = librosa.load(file, offset=current_offset-part_dur, duration=part_dur, sr=None)
           part_num = len(left_splits) - i
           y_sr.insert(0, (y, sr, f'part {part_num} ({p}%)', part_dur))
           current_offset -= part_dur
@@ -95,10 +107,13 @@ class FeaturesCompute:
         # Load parts after middle
         current_offset = mid_point
         for i, p in enumerate(right_splits):
-          # Compare last part with in_out_sec
-          part_dur = min(duration * p/100, self.in_out_sec) if i == len(right_splits)-1 else duration * p/100
-          y, sr = librosa.load(file, offset=current_offset, duration=part_dur, sr=None)
-          # Fix: continue numbering from where left splits ended
+          # Last part: use either percentage or in_out_sec
+          if i == len(right_splits)-1:
+              part_dur = min(duration * p/100, self.in_out_sec)
+              y, sr = librosa.load(file, offset=duration-part_dur, duration=part_dur, sr=None)  # From end
+          else:
+              part_dur = duration * p/100
+              y, sr = librosa.load(file, offset=current_offset, duration=part_dur, sr=None)
           part_num = len(left_splits) + i + 1
           y_sr.append((y, sr, f'part {part_num} ({p}%)', part_dur))
           current_offset += part_dur

@@ -4,7 +4,6 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 
 from audio_extract.build_db import MusicDatabase
-from audio_extract.uid_gen import TrackIDGenerator
 
 def get_features_from_folder(base_path, split=[15, 70, 15], in_out_sec=30):
   folder_list = []
@@ -35,3 +34,10 @@ def get_features_from_folder(base_path, split=[15, 70, 15], in_out_sec=30):
           print(f"Processing {folder} --> {base_uid}_[1,2,..].csv")
           database._scan_library(depth=False, extract_features=True, output_file=f'{base_uid}.csv', split=split, in_out_sec=in_out_sec)
           print(f"Processed {folder} --> {base_uid}_[1,2,..].csv")
+
+def del_csv_files(base_path):
+  for root, dirs, files in os.walk(base_path):
+    for file in files:
+      if file.endswith('.csv'):
+        os.remove(os.path.join(root, file))
+        print(f"Deleted {os.path.join(root, file)}")

@@ -38,5 +38,5 @@ def get_features(base_path, split=[15, 70, 15]):
           print(f"Processed {folder} --> {base_uid}_[1,2,..].csv")
 
 if __name__ == "__main__":
-  base_path = r'D:\#ALLMYMUSIC - Copy\05. Illusionary ドリーミング\Illusionary ドリーミング - ちょうどその時'
+  base_path = r'D:\#ALLMYMUSIC - Copy'
   get_features(base_path, split=[20, 20, 20, 20, 20])
