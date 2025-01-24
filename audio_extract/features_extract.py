@@ -4,7 +4,7 @@ from tqdm import tqdm
 from .features_compute import FeaturesCompute
 
 class FeatureExtractor:
-    def __init__(self, split=[15, 70, 15], in_out_sec=30):
+    def __init__(self, split, in_out_sec):
         self.features = FeaturesCompute(split, in_out_sec)
     
     def extract_features_single(self, uid, audio_path):

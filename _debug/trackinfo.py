@@ -39,4 +39,4 @@ def get_features(base_path, split=[15, 70, 15]):
 
 if __name__ == "__main__":
   base_path = r'D:\#ALLMYMUSIC - Copy'
-  get_features(base_path, split=[20, 20, 20, 20, 20])
+  get_features(base_path, split=5)
